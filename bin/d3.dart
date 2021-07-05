@@ -17,23 +17,24 @@ void main(List<String> arguments) {
       .openRead()
       .map(utf8.decode)
       .transform(new LineSplitter())
-      .forEach((l) => cmd.add(l));
-
-  for (int i = 0; i < cmd.length; i++) {
-    if (cmd[i].contains('on')) {
-      var st = cmd[i].split(" ");
+      .forEach((l) {
+    if (l.contains('on')) {
+      var st = l.split(" ");
       print("${st[1]}");
       hour = int.parse(st[1]);
       min = int.parse(st[2]);
-    } else if (cmd[i] == "set") {
+    } else if (l == "set") {
       stateCount = (stateCount + 1) % 3;
-    } else if (cmd[i] == "inc" && stateCount == 1) {
+    } else if (l == "inc" && stateCount == 1) {
       hour = (hour + 1) % 24;
-    } else if (cmd[i] == "inc" && stateCount == 2) {
+    } else if (l == "inc" && stateCount == 2) {
       min = (min + 1) % 60;
     }
-  }
-  print("Time : $hour.$min");
+  }).then((value) => print("Time : $hour.$min"));
+
+  // for (int i = 0; i < cmd.length; i++) async{
+
+  // }
 
   void idle(String cmd) {
     var timeCmd = cmd.split(' ');
