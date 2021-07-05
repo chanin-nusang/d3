@@ -1,4 +1,4 @@
-on 18.0
+on 18 0
 set
 inc
 set

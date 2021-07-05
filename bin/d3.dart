@@ -8,9 +8,10 @@ import 'package:test/expect.dart';
 
 const lineNumber = 'line-number';
 void main(List<String> arguments) {
-  print('Hello world: ${d3.calculate()}!');
   String state = "Idle";
-  double time = 0.00;
+  int stateCount = 0;
+  int hour = 0;
+  int min = 0;
   List<String> cmd = [];
   new File("bin/input.txt")
       .openRead()
@@ -19,19 +20,24 @@ void main(List<String> arguments) {
       .forEach((l) => cmd.add(l));
 
   for (int i = 0; i < cmd.length; i++) {
-    if (cmd[i].contains('on') 
-    var st = cmd[i].
-    ) ;
+    if (cmd[i].contains('on')) {
+      var st = cmd[i].split(" ");
+      print("${st[1]}");
+      hour = int.parse(st[1]);
+      min = int.parse(st[2]);
+    } else if (cmd[i] == "set") {
+      stateCount = (stateCount + 1) % 3;
+    } else if (cmd[i] == "inc" && stateCount == 1) {
+      hour = (hour + 1) % 24;
+    } else if (cmd[i] == "inc" && stateCount == 2) {
+      min = (min + 1) % 60;
+    }
   }
+  print("Time : $hour.$min");
+
   void idle(String cmd) {
     var timeCmd = cmd.split(' ');
     String time = timeCmd[1];
     print(time);
   }
 }
-
-class Idle {}
-
-class setHours {}
-
-class setMins {}
